@@ -9,7 +9,17 @@ import AnalogueClock from "./AnalogueClock";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
-import { MetalRatio } from "@prisma/client";
+interface MetalRatio {
+  id: string;
+  date: string;
+  Au: number; Ag: number; Pt: number; Pd: number;
+  Rh: number; Ir: number; Os: number; Ru: number;
+  Hg: number; Cu: number;
+  updatedAt: string;
+}
+
+interface FAQ { id: string; question: string; answer: string; order: number }
+interface BlogLink { id: string; title: string; url: string; order: number }
 
 interface Props {
   initialRatio: MetalRatio | null;

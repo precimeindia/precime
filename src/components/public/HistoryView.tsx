@@ -84,7 +84,7 @@ export default function HistoryView({ activeTab }: Props) {
                   mode="single"
                   selected={customFrom}
                   onSelect={setCustomFrom}
-                  disabled={(date: Date) => date.getTime() > new Date().getTime()}
+                  disabled={(date) => date > new Date()}
                 />
               </PopoverContent>
             </Popover>
@@ -103,7 +103,7 @@ export default function HistoryView({ activeTab }: Props) {
                   mode="single"
                   selected={customTo}
                   onSelect={setCustomTo}
-                  disabled={(date: Date) => date.getTime() > new Date().getTime() || (customFrom ? date.getTime() < (customFrom as Date).getTime() : false)}
+                  disabled={(date) => date > new Date() || (customFrom ? date < customFrom : false)}
                 />
               </PopoverContent>
             </Popover>
@@ -143,7 +143,7 @@ export default function HistoryView({ activeTab }: Props) {
                 From: {customFrom ? toISODate(customFrom) : "—"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={customFrom} onSelect={setCustomFrom} disabled={(d) => d.getTime() > new Date().getTime()} /></PopoverContent>
+            <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={customFrom} onSelect={setCustomFrom} disabled={(d) => d > new Date()} /></PopoverContent>
           </Popover>
           <Popover>
             <PopoverTrigger asChild>
@@ -152,7 +152,7 @@ export default function HistoryView({ activeTab }: Props) {
                 To: {customTo ? toISODate(customTo) : "—"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={customTo} onSelect={setCustomTo} disabled={(d: Date) => d.getTime() > new Date().getTime() || (customFrom ? d.getTime() < (customFrom as Date).getTime() : false)} /></PopoverContent>
+            <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={customTo} onSelect={setCustomTo} disabled={(d) => d > new Date() || (customFrom ? d < customFrom : false)} /></PopoverContent>
           </Popover>
         </div>
       )}
