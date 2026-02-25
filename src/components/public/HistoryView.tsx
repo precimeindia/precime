@@ -103,7 +103,7 @@ export default function HistoryView({ activeTab }: Props) {
                   mode="single"
                   selected={customTo}
                   onSelect={setCustomTo}
-                  disabled={(date) => date > new Date() || (customFrom ? date < customFrom : false)}
+                  disabled={(date) => date > new Date()}
                 />
               </PopoverContent>
             </Popover>

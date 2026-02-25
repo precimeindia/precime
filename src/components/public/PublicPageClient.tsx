@@ -15,7 +15,7 @@ interface MetalRatio {
   Au: number; Ag: number; Pt: number; Pd: number;
   Rh: number; Ir: number; Os: number; Ru: number;
   Hg: number; Cu: number;
-  updatedAt: string;
+  updatedAt: Date | string;
 }
 
 interface FAQ { id: string; question: string; answer: string; order: number }
