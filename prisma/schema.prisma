@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MetalRatio {
+  id        String          @id @default(cuid())
+  date      String          @unique // YYYY-MM-DD
+  Au        Float           @default(0)
+  Ag        Float           @default(0)
+  Pt        Float           @default(0)
+  Pd        Float           @default(0)
+  Rh        Float           @default(0)
+  Ir        Float           @default(0)
+  Os        Float           @default(0)
+  Ru        Float           @default(0)
+  Hg        Float           @default(0)
+  Cu        Float           @default(1.0)
+  publishAt DateTime?       // null = live now; future datetime = scheduled
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  logs      MetalRatioLog[]
+}
+
+model MetalRatioLog {
+  id           String     @id @default(cuid())
+  metalRatioId String
+  metalRatio   MetalRatio @relation(fields: [metalRatioId], references: [id])
+  date         String
+  note         String?
+  oldValues    String // JSON stored as string for SQLite
+  newValues    String // JSON stored as string for SQLite
+  createdAt    DateTime   @default(now())
+}
+
+model FAQ {
+  id       String @id @default(cuid())
+  question String
+  answer   String
+  order    Int    @default(0)
+}
+
+model BlogLink {
+  id    String @id @default(cuid())
+  title String
+  url   String
+  order Int    @default(0)
+}
+
+model AdminUser {
+  id           String @id @default(cuid())
+  username     String @unique
+  passwordHash String
+}
