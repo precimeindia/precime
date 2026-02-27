@@ -15,10 +15,10 @@ import { format } from "date-fns";
 
 interface RatioForm {
   Au: string; Ag: string; Pt: string; Pd: string;
-  Rh: string; Ir: string; Os: string; Ru: string; Hg: string;
+  Rh: string; Ir: string; Os: string; Ru: string; Hg: string; Cu: string;
 }
 
-const defaultForm: RatioForm = { Au: "", Ag: "", Pt: "", Pd: "", Rh: "", Ir: "", Os: "", Ru: "", Hg: "" };
+const defaultForm: RatioForm = { Au: "", Ag: "", Pt: "", Pd: "", Rh: "", Ir: "", Os: "", Ru: "", Hg: "", Cu: "1" };
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -52,6 +52,7 @@ export default function AdminDashboard() {
             Au: String(data.Au), Ag: String(data.Ag), Pt: String(data.Pt),
             Pd: String(data.Pd), Rh: String(data.Rh), Ir: String(data.Ir),
             Os: String(data.Os), Ru: String(data.Ru), Hg: String(data.Hg),
+            Cu: String(data.Cu ?? 1),
           });
           if (data.publishAt && new Date(data.publishAt) > new Date()) {
             setIsScheduled(true);
@@ -112,6 +113,7 @@ export default function AdminDashboard() {
         Os: parseFloat(form.Os) || 0,
         Ru: parseFloat(form.Ru) || 0,
         Hg: parseFloat(form.Hg) || 0,
+        Cu: parseFloat(form.Cu) || 1,
         note: note || undefined,
         publishAt: publishAtIso,
       };
@@ -195,14 +197,11 @@ export default function AdminDashboard() {
                   type="number"
                   step="0.0001"
                   min="0"
-                  value={metal.isBase ? "1.0000" : form[metal.symbol as keyof RatioForm]}
-                  onChange={(e) =>
-                    !metal.isBase && setForm((prev) => ({ ...prev, [metal.symbol]: e.target.value }))
-                  }
-                  readOnly={metal.isBase}
-                  disabled={metal.isBase || loadingRatio}
+                  value={form[metal.symbol as keyof RatioForm]}
+                  onChange={(e) => setForm((prev) => ({ ...prev, [metal.symbol]: e.target.value }))}
+                  disabled={loadingRatio}
                   placeholder="0.0000"
-                  className={`font-mono text-sm ${metal.isBase ? "bg-muted/30 text-[#b87333] cursor-not-allowed opacity-80" : "bg-background"}`}
+                  className={`font-mono text-sm ${metal.isBase ? "bg-background border-[#b87333]/50 focus-visible:ring-[#b87333]" : "bg-background"}`}
                 />
               </div>
             ))}

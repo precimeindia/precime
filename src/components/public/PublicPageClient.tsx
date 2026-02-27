@@ -61,15 +61,14 @@ export default function PublicPageClient({
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
         <div className="text-center mb-8">
-          <Badge variant="outline" className="mb-4 text-[#d4af37] border-[#d4af37]/30 bg-[#d4af37]/5">
-            Metal-to-Copper Ratios
+          <Badge variant="outline" className="mb-4 text-[#d4af37] border-[#d4af37]/30 bg-[#d4af37]/5 text-xs font-normal tracking-wide">
+            Metal to Metal Ratio
           </Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3">
-            <span className="text-gold-gradient">Daily Precious Metal</span>
+            <span className="text-gold-gradient">Precious Metal Ratio</span>
             <br />
-            <span className="text-foreground">Ratios vs Copper</span>
+            <span className="text-foreground">India</span>
           </h2>
-
         </div>
 
         {/* History Tabs */}
@@ -121,11 +120,52 @@ export default function PublicPageClient({
 
       <Separator className="max-w-7xl mx-auto my-8 opacity-30" />
 
-      {/* Clock */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col items-center justify-center">
+      {/* Clock and Info */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-20">
+        <div className="flex flex-col items-center justify-center mb-16">
           <h2 className="text-xl font-semibold mb-4 text-foreground text-center">Market Time (IST)</h2>
           <AnalogueClock />
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center mt-8">
+          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-16 px-4">
+            If you are looking for the latest and most reliable top 10 precious metal ratios with respect to copper, <span className="text-[#d4af37] font-semibold">precime.com</span> is your go-to platform. We provide real-time results and historical records.
+          </p>
+
+          <h3 className="text-3xl font-bold mb-8 text-foreground tracking-tight">FAQ</h3>
+          
+          <div className="space-y-8 text-left bg-card/30 border border-border/50 rounded-2xl p-6 sm:p-10">
+            <div>
+              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-[#d4af37]">•</span> What is precime.com?
+              </h4>
+              <p className="text-muted-foreground text-base leading-relaxed pl-5">
+                precime.com provides accurate ratios of precious metals within the Indian market.
+              </p>
+            </div>
+            
+            <Separator className="opacity-30 ml-5" />
+            
+            <div>
+              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-[#d4af37]">•</span> How are the ratios decided?
+              </h4>
+              <p className="text-muted-foreground text-base leading-relaxed pl-5">
+                Ratios depend on demand-supply, extraction, inflation, and interest rates which decides price hence ratio.
+              </p>
+            </div>
+            
+            <Separator className="opacity-30 ml-5" />
+            
+            <div>
+              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-[#d4af37]">•</span> Who is it for?
+              </h4>
+              <p className="text-muted-foreground text-base leading-relaxed pl-5">
+                Import-Export, Analysts and various other fields.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

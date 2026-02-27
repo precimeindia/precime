@@ -12,8 +12,8 @@ const ratioSchema = z.object({
   Rh: z.number().min(0),
   Ir: z.number().min(0),
   Os: z.number().min(0),
-  Ru: z.number().min(0),
   Hg: z.number().min(0),
+  Cu: z.number().min(0).optional(),
   note: z.string().max(500).optional(),
   publishAt: z.string().datetime().optional().nullable(), // ISO string or null = publish now
 });
@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
     }
 
     const { note, publishAt, ...ratioData } = parsed.data;
-    // Enforce Cu = 1.0000 always
-    const newValues = { ...ratioData, Cu: 1.0 };
+    // Allow Cu to be set by the client, defaulting to 1.0
+    const newValues = { Cu: 1.0, ...ratioData };
 
     // Convert publishAt to Date or null
     const publishAtDate = publishAt ? new Date(publishAt) : null;

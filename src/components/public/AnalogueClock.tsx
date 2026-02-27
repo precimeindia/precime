@@ -2,8 +2,41 @@
 
 import { useEffect, useRef } from "react";
 
+const istTimeFormatter = new Intl.DateTimeFormat("en-IN", {
+  timeZone: "Asia/Kolkata",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+});
+
+function getIstTimeParts(date: Date) {
+  const parts = istTimeFormatter.formatToParts(date);
+
+  return {
+    hr: Number(parts.find((part) => part.type === "hour")?.value ?? "0") % 12,
+    mn: Number(parts.find((part) => part.type === "minute")?.value ?? "0"),
+    sc: Number(parts.find((part) => part.type === "second")?.value ?? "0"),
+  };
+}
+
 export default function AnalogueClock() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const timeOffsetMs = useRef<number>(0);
+
+  useEffect(() => {
+    // Sync with accurate world time to eliminate local device drift
+    fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata")
+      .then((res) => {
+        if (!res.ok) throw new Error(`Time sync failed with status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        const trueTime = new Date(data.datetime).getTime();
+        timeOffsetMs.current = trueTime - Date.now();
+      })
+      .catch(() => console.log("Time sync failed, falling back to local client time"));
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,17 +85,14 @@ export default function AnalogueClock() {
         ctx.stroke();
       }
 
-      // IST time
-      const now = new Date();
-      const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-      const istMs = utcMs + 5.5 * 3600000;
-      const ist = new Date(istMs);
-      const hr = ist.getHours() % 12;
-      const mn = ist.getMinutes();
-      const sc = ist.getSeconds();
+      // True IST time Calculation
+      const trueNowMs = Date.now() + timeOffsetMs.current;
+      const trueDateObj = new Date(trueNowMs);
+
+      const { hr, mn, sc } = getIstTimeParts(trueDateObj);
 
       // Hour hand
-      const hrAngle = ((hr + mn / 60) * Math.PI * 2) / 12 - Math.PI / 2;
+      const hrAngle = ((hr + mn / 60) * Math.PI * 2) / 12;
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(hrAngle);
@@ -76,7 +106,7 @@ export default function AnalogueClock() {
       ctx.restore();
 
       // Minute hand
-      const mnAngle = ((mn + sc / 60) * Math.PI * 2) / 60 - Math.PI / 2;
+      const mnAngle = ((mn + sc / 60) * Math.PI * 2) / 60;
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(mnAngle);
@@ -90,7 +120,7 @@ export default function AnalogueClock() {
       ctx.restore();
 
       // Second hand (gold)
-      const scAngle = (sc * Math.PI * 2) / 60 - Math.PI / 2;
+      const scAngle = (sc * Math.PI * 2) / 60;
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(scAngle);

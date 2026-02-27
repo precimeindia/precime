@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { formatRatio, formatDate, toISODate, METALS } from "@/lib/metals";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar } from "@/components/ui/calendar";
@@ -172,9 +172,8 @@ export default function HistoryView({ activeTab }: Props) {
           </thead>
           <tbody>
             {ratios.map((ratio, i) => (
-              <>
+              <Fragment key={ratio.date}>
                 <tr
-                  key={ratio.date}
                   className={`border-b border-border/30 last:border-0 cursor-pointer table-row-hover transition-colors ${i % 2 === 0 ? "bg-card/20" : "bg-transparent"}`}
                   onClick={() => setExpandedDate(expandedDate === ratio.date ? null : ratio.date)}
                 >
@@ -182,7 +181,7 @@ export default function HistoryView({ activeTab }: Props) {
                   {nonCuMetals.map((m) => (
                     <td key={m.symbol} className="px-3 py-3 text-right font-mono text-[#d4af37] text-xs">{formatRatio(ratio[m.symbol as keyof typeof ratio] as number)}</td>
                   ))}
-                  <td className="px-3 py-3 text-right font-mono text-[#b87333] text-xs font-bold">1.0000</td>
+                  <td className="px-3 py-3 text-right font-mono text-[#b87333] text-xs font-bold">{formatRatio(ratio.Cu ?? 1)}</td>
                   <td className="px-3 py-3 text-right text-muted-foreground">
                     {expandedDate === ratio.date ? <ChevronUp className="w-4 h-4 ml-auto" /> : <ChevronDown className="w-4 h-4 ml-auto" />}
                   </td>
@@ -203,7 +202,7 @@ export default function HistoryView({ activeTab }: Props) {
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>

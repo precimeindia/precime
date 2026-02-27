@@ -33,11 +33,8 @@ export const METAL_SYMBOLS = METALS.map((m) => m.symbol) as (
 export type MetalSymbol = "Au" | "Ag" | "Pt" | "Pd" | "Rh" | "Ir" | "Os" | "Ru" | "Hg" | "Cu";
 
 export function formatRatio(value: number): string {
-  if (value === 1.0) return "1.0000";
-  if (value >= 100) return value.toFixed(4);
-  if (value >= 10) return value.toFixed(4);
-  if (value >= 1) return value.toFixed(4);
-  return value.toFixed(6);
+  if (value >= 1) return parseFloat(value.toFixed(4)).toString();
+  return parseFloat(value.toFixed(6)).toString();
 }
 
 export function formatDate(dateStr: string): string {
