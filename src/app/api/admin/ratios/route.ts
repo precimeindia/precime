@@ -97,3 +97,29 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const authResult = await requireAdmin();
+  if (isUnauthorizedResponse(authResult)) return authResult;
+
+  const { searchParams } = new URL(request.url);
+  const date = searchParams.get("date");
+
+  if (!date) {
+    return NextResponse.json({ error: "Date parameter is required for deletion" }, { status: 400 });
+  }
+
+  try {
+    // Delete the ratio
+    await prisma.metalRatio.delete({
+      where: { date },
+    });
+
+    // Optionally cleanup logs if desired, but Prisma cascading normally handles it or we can leave them for audit
+
+    return NextResponse.json({ success: true, message: `Scheduled ratio for ${date} deleted successfully` });
+  } catch (error) {
+    console.error("DELETE /api/admin/ratios error:", error);
+    return NextResponse.json({ error: "Failed to delete ratio. It might not exist." }, { status: 500 });
+  }
+}

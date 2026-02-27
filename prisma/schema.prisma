@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model MetalRatio {
@@ -32,7 +33,7 @@ model MetalRatio {
 model MetalRatioLog {
   id           String     @id @default(cuid())
   metalRatioId String
-  metalRatio   MetalRatio @relation(fields: [metalRatioId], references: [id])
+  metalRatio   MetalRatio @relation(fields: [metalRatioId], references: [id], onDelete: Cascade)
   date         String
   note         String?
   oldValues    String // JSON stored as string for SQLite

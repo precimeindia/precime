@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { METALS, toISODate } from "@/lib/metals";
-import { LogOut, Save, FileText, Download, Clock } from "lucide-react";
+import { LogOut, Save, FileText, Download, Clock, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 
 interface RatioForm {
@@ -135,6 +135,25 @@ export default function AdminDashboard() {
       toast.error("Network error");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDeleteSchedule = async (date: string) => {
+    if (!confirm(`Are you sure you want to delete the scheduled update for ${date}?`)) return;
+    
+    try {
+      const res = await fetch(`/api/admin/ratios?date=${date}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        toast.success("Schedule deleted successfully");
+        loadPendingSchedules();
+        if (selectedDate === date) loadRatioForDate(date);
+      } else {
+        toast.error("Failed to delete schedule");
+      }
+    } catch {
+      toast.error("Network error");
     }
   };
 
@@ -295,17 +314,28 @@ export default function AdminDashboard() {
                       {format(new Date(schedule.publishAt), "PP 'at' p")} (IST)
                     </p>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full mt-3 h-7 text-[11px]"
-                    onClick={() => {
-                      setSelectedDate(schedule.date);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                  >
-                    Edit Schedule
-                  </Button>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1 h-7 text-[11px]"
+                      onClick={() => {
+                        setSelectedDate(schedule.date);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Edit 
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-[11px] text-red-500 hover:text-red-600 hover:bg-red-500/10 border-border/50"
+                      onClick={() => handleDeleteSchedule(schedule.date)}
+                      title="Delete Schedule"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
                 </div>
               ))
             ) : (
