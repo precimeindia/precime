@@ -129,7 +129,7 @@ export default function PublicPageClient({
 
         <div className="max-w-4xl mx-auto text-center mt-8">
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-16 px-4">
-            If you are looking for the latest and most reliable top 10 precious metal ratios with respect to copper, <span className="text-[#d4af37] font-semibold">precime.com</span> is your go-to platform. We provide real-time results and historical records.
+            If you are looking for the latest and most reliable top 10 precious metal ratios with respect to copper, <span className="text-[#d4af37] font-semibold">precime.org</span> is your go-to platform. We provide real-time results and historical records.
           </p>
 
           <h3 className="text-3xl font-bold mb-8 text-foreground tracking-tight">FAQ</h3>
@@ -137,10 +137,10 @@ export default function PublicPageClient({
           <div className="space-y-8 text-left bg-card/30 border border-border/50 rounded-2xl p-6 sm:p-10">
             <div>
               <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-[#d4af37]">•</span> What is precime.com?
+                <span className="text-[#d4af37]">•</span> What is precime.org?
               </h4>
               <p className="text-muted-foreground text-base leading-relaxed pl-5">
-                precime.com provides accurate ratios of precious metals within the Indian market.
+                precime.org provides accurate ratios of precious metals within the Indian market.
               </p>
             </div>
             
