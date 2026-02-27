@@ -163,7 +163,11 @@ export default function AdminDashboard() {
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#d4af37] to-[#b8860b] flex items-center justify-center text-black font-bold text-xs">PM</div>
+            <img 
+              src="/logo.png" 
+              alt="PM Logo" 
+              className="w-8 h-8 object-contain" 
+            />
             <div>
               <p className="text-sm font-bold">Admin Dashboard</p>
               <p className="text-[11px] text-muted-foreground">Precious Metals India</p>

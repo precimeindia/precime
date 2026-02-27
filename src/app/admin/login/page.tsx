@@ -42,9 +42,11 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d4af37] to-[#b8860b] flex items-center justify-center text-black font-bold text-xl mx-auto mb-4">
-            PM
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Precime India Logo" 
+            className="w-16 h-16 object-contain mx-auto mb-4" 
+          />
           <h1 className="text-2xl font-bold text-gold-gradient">Precious Metals India</h1>
           <p className="text-muted-foreground text-sm mt-1">Admin Dashboard</p>
         </div>
