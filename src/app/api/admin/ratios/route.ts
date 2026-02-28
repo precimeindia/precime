@@ -12,6 +12,7 @@ const ratioSchema = z.object({
   Rh: z.number().min(0),
   Ir: z.number().min(0),
   Os: z.number().min(0),
+  Ru: z.number().min(0),
   Hg: z.number().min(0),
   Cu: z.number().min(0).optional(),
   note: z.string().max(500).optional(),
