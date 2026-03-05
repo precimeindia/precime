@@ -7,6 +7,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
+import HistoricalChart from "./HistoricalChart";
 
 interface MetalRatio {
   id: string; date: string;
@@ -156,6 +157,9 @@ export default function HistoryView({ activeTab }: Props) {
           </Popover>
         </div>
       )}
+
+      {/* Historical Chart */}
+      <HistoricalChart data={ratios} />
 
       {/* Scrollable summary table */}
       <div className="overflow-x-auto rounded-xl border border-border/50">
