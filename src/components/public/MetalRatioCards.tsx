@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Metal, formatRatio } from "@/lib/metals";
+import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -164,7 +165,7 @@ export default function MetalRatioCards({ ratio, metals }: Props) {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-12">
         {/* Mobile: HBT Grid */}
         <div className="grid grid-cols-3 lg:hidden gap-2 mb-4">
           {hbtMetals.map((metal) => {
@@ -226,53 +227,94 @@ export default function MetalRatioCards({ ratio, metals }: Props) {
           })}
         </div>
 
-        {/* Toggle Button for Other Metals */}
-        <div className="flex justify-center my-6">
+        <div className="flex flex-col items-center gap-6 mt-12 mb-8 max-w-md mx-auto">
+          {/* Action Call Stack */}
+          
+          {/* 1. View Other Metals Toggle */}
           <Button 
             variant="outline" 
             onClick={() => setShowOthers(!showOthers)}
-            className="gap-2 rounded-full px-6 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card hover:border-[#d4af37]/50 transition-all font-medium"
+            className="w-full gap-2 rounded-full px-6 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card hover:border-[#d4af37]/50 transition-all font-medium py-6"
           >
             {showOthers ? (
-              <><ChevronUp className="w-4 h-4 text-[#d4af37]" /> Hide Other Metals</>
+              <><ChevronUp className="w-5 h-5 text-[#d4af37]" /> Hide Other Metals</>
             ) : (
-              <><ChevronDown className="w-4 h-4 text-[#d4af37]" /> View Other Precious Metals</>
+              <><ChevronDown className="w-5 h-5 text-[#d4af37]" /> View Other Precious Metals</>
             )}
           </Button>
+
+          {/* Collapsible Section for Other Metals */}
+          {showOthers && (
+            <div className="animate-in fade-in slide-in-from-top-4 duration-500 ease-out w-full mb-4">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="h-px bg-border/50 flex-1"></div>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Other Metals</span>
+                <div className="h-px bg-border/50 flex-1"></div>
+              </div>
+
+              {/* Mobile: Other Metals Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:hidden gap-3 w-[150%] -ml-[25%] sm:w-full sm:ml-0">
+                {otherMetals.map((metal) => {
+                    const value = ratio[metal.symbol as keyof typeof ratio] as number;
+                    return (
+                        <div
+                            key={metal.symbol}
+                            className={`rounded-xl border bg-gradient-to-br p-3 shadow-sm flex flex-col items-center justify-center text-center ${metalColors[metal.symbol]}`}
+                        >
+                            <div className="mb-2">
+                                <ElementTile symbol={metal.symbol} size={32} />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold">{metal.symbol}</h3>
+                            </div>
+                            <div className="mt-1">
+                                <span className="text-sm sm:text-base font-bold font-mono tracking-tight">
+                                    {formatRatio(value)}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                })}
+              </div>
+
+              {/* Desktop: Other Metals Table */}
+              <div className="hidden lg:block overflow-hidden rounded-xl border border-border/50 bg-card/30 w-[150%] -ml-[25%]">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border bg-card/80">
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Metal</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Symbol</th>
+                      <th className="text-right px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ratio vs Copper</th>
+                      <th className="text-right px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Base</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {otherMetals.map((metal, i) => renderTableRow(metal, i))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* 2. Talk to the Expert Link */}
+          <Link href="https://canarabazaar.blogspot.com/" target="_blank" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full gap-2 rounded-full px-6 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card hover:border-[#d4af37]/50 transition-all font-medium py-6"
+            >
+              Talk to the Expert
+            </Button>
+          </Link>
+
+          {/* 3. Get Started Button */}
+          <Link href="/get-started" className="w-full">
+            <Button 
+              className="w-full gap-2 rounded-full px-6 bg-[#d4af37] hover:bg-[#c5a030] text-black transition-all font-semibold py-6"
+            >
+              Get Started Now
+            </Button>
+          </Link>
         </div>
-
-        {/* Collapsible Section for Other Metals */}
-        {showOthers && (
-          <div className="animate-in fade-in slide-in-from-top-4 duration-500 ease-out">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="h-px bg-border/50 flex-1"></div>
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Other Metals</span>
-              <div className="h-px bg-border/50 flex-1"></div>
-            </div>
-
-            {/* Mobile: Other Metals Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:hidden gap-3">
-              {otherMetals.map(renderCard)}
-            </div>
-
-            {/* Desktop: Other Metals Table */}
-            <div className="hidden lg:block overflow-hidden rounded-xl border border-border/50 bg-card/30">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border bg-card/80">
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Metal</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Symbol</th>
-                    <th className="text-right px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ratio vs Copper</th>
-                    <th className="text-right px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Base</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {otherMetals.map((metal, i) => renderTableRow(metal, i))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
