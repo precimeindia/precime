@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Metal, formatRatio, formatDate } from "@/lib/metals";
 import MetalRatioCards from "./MetalRatioCards";
 import HistoryView from "./HistoryView";
+import MiningMap from "./MiningMap";
 import AnalogueClock from "./AnalogueClock";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -116,6 +117,13 @@ export default function PublicPageClient({
         ) : (
           <HistoryView activeTab={activeTab} />
         )}
+      </section>
+
+      <Separator className="max-w-7xl mx-auto my-8 opacity-30" />
+
+      {/* Geopolitics Map Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <MiningMap />
       </section>
 
       <Separator className="max-w-7xl mx-auto my-8 opacity-30" />
