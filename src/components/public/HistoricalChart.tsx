@@ -51,6 +51,7 @@ export default function HistoricalChart({ data }: HistoricalChartProps) {
     Os: false,
     Ru: false,
     Hg: false,
+    Cu: false,
   });
 
   const chartData = useMemo(() => {
@@ -74,8 +75,6 @@ export default function HistoricalChart({ data }: HistoricalChartProps) {
       [symbol]: !prev[symbol]
     }));
   };
-
-  const activeNonCuMetals = METALS.filter(m => !m.isBase);
 
   if (!data || data.length === 0) return null;
 
@@ -129,7 +128,7 @@ export default function HistoricalChart({ data }: HistoricalChartProps) {
               content={(props) => {
                 return (
                   <div className="flex flex-wrap items-center justify-center gap-2 mt-4 pt-4 border-t border-border/30">
-                    {activeNonCuMetals.map((metal) => {
+                    {METALS.map((metal) => {
                       const isActive = activeMetals[metal.symbol];
                       return (
                         <button
@@ -157,7 +156,7 @@ export default function HistoricalChart({ data }: HistoricalChartProps) {
               }}
             />
             
-            {activeNonCuMetals.map((metal) => (
+            {METALS.map((metal) => (
               activeMetals[metal.symbol] && (
                 <Line
                   key={metal.symbol}
