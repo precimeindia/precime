@@ -167,10 +167,10 @@ export default function HistoryView({ activeTab }: Props) {
           <thead>
             <tr className="border-b border-border bg-card/80">
               <th className="sticky left-0 bg-card z-10 text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider min-w-[120px]">Date</th>
+              <th className="text-right px-3 py-3 text-xs font-semibold text-[#b87333] uppercase tracking-wider">Cu</th>
               {nonCuMetals.map((m) => (
                 <th key={m.symbol} className="text-right px-3 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{m.symbol}</th>
               ))}
-              <th className="text-right px-3 py-3 text-xs font-semibold text-[#b87333] uppercase tracking-wider">Cu</th>
               <th className="px-3 py-3"></th>
             </tr>
           </thead>
@@ -182,10 +182,10 @@ export default function HistoryView({ activeTab }: Props) {
                   onClick={() => setExpandedDate(expandedDate === ratio.date ? null : ratio.date)}
                 >
                   <td className="sticky left-0 bg-inherit px-4 py-3 font-medium text-foreground">{formatDate(ratio.date)}</td>
+                  <td className="px-3 py-3 text-right font-mono text-[#b87333] text-xs font-bold">{formatRatio(ratio.Cu ?? 1)}</td>
                   {nonCuMetals.map((m) => (
                     <td key={m.symbol} className="px-3 py-3 text-right font-mono text-[#d4af37] text-xs">{formatRatio(ratio[m.symbol as keyof typeof ratio] as number)}</td>
                   ))}
-                  <td className="px-3 py-3 text-right font-mono text-[#b87333] text-xs font-bold">{formatRatio(ratio.Cu ?? 1)}</td>
                   <td className="px-3 py-3 text-right text-muted-foreground">
                     {expandedDate === ratio.date ? <ChevronUp className="w-4 h-4 ml-auto" /> : <ChevronDown className="w-4 h-4 ml-auto" />}
                   </td>
