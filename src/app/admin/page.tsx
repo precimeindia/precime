@@ -102,18 +102,23 @@ export default function AdminDashboard() {
         publishAtIso = publishDateObj.toISOString();
       }
 
+      const parseValue = (val: string, fallback: number) => {
+        const parsed = parseFloat(val);
+        return isNaN(parsed) ? fallback : parsed;
+      };
+
       const body = {
         date: selectedDate,
-        Au: parseFloat(form.Au) || 0,
-        Ag: parseFloat(form.Ag) || 0,
-        Pt: parseFloat(form.Pt) || 0,
-        Pd: parseFloat(form.Pd) || 0,
-        Rh: parseFloat(form.Rh) || 0,
-        Ir: parseFloat(form.Ir) || 0,
-        Os: parseFloat(form.Os) || 0,
-        Ru: parseFloat(form.Ru) || 0,
-        Hg: parseFloat(form.Hg) || 0,
-        Cu: parseFloat(form.Cu) || 1,
+        Au: parseValue(form.Au, 0),
+        Ag: parseValue(form.Ag, 0),
+        Pt: parseValue(form.Pt, 0),
+        Pd: parseValue(form.Pd, 0),
+        Rh: parseValue(form.Rh, 0),
+        Ir: parseValue(form.Ir, 0),
+        Os: parseValue(form.Os, 0),
+        Ru: parseValue(form.Ru, 0),
+        Hg: parseValue(form.Hg, 0),
+        Cu: parseValue(form.Cu, 1),
         note: note || undefined,
         publishAt: publishAtIso,
       };
